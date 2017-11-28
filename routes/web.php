@@ -11,6 +11,16 @@
 |
 */
 
+use Illuminate\Support\Facades\Auth;
+
 Route::get('/', function () {
     return view('welcome');
 });
+
+if  (!Auth::user()) {
+    Route::redirect('/', 'login');
+}
+
+Auth::routes();
+
+Route::get('/home', 'HomeController@index')->name('home');
