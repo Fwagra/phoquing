@@ -11,6 +11,6 @@ class TracksTableSeeder extends Seeder
      */
     public function run()
     {
-        //
+        factory(\App\Track::class, 20)->create();
     }
 }
