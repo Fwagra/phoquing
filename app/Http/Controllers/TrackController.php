@@ -41,7 +41,27 @@ class TrackController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->merge(['user_id' => $request->user()->id]);
+
+        if ($track = Track::find($request->id)) {
+            if ($request->end && $request->date) {
+                $request->merge(['end' => $request->date . ' ' . $request->end ]);
+            }
+
+            if ($request->end && !$request->date) {
+                $request->merge(['end' => date('Y-m-d') . ' ' . $request->end ]);
+            }
+
+            $track->update($request->all());
+            $track->save();
+        }else{
+            $request->merge(['start' => $request->date . ' ' . $request->start ]);
+            if ($request->end)
+                $request->merge(['end' => $request->date . ' ' . $request->end ]);
+            $track = Track::create($request->except('date'));
+        }
+
+        return $track;
     }
 
 

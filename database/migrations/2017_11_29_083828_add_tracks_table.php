@@ -16,12 +16,12 @@ class AddTracksTable extends Migration
         Schema::create('tracks', function (Blueprint $table) {
             $table->increments('id');
             $table->timestamps();
-            $table->timestamp('start');
-            $table->timestamp('end');
+            $table->timestamp('start')->nullable();
+            $table->timestamp('end')->nullable();
             $table->unsignedInteger('user_id');
             $table->string('comment');
             $table->string('category', 100);
-            $table->float('total', 6, 2);
+            $table->float('total', 6, 2)->nullable();
             $table->foreign('user_id')->references('id')->on('users');
             $table->index(['user_id', 'start', 'category']);
             $table->index(['user_id', 'category']);
