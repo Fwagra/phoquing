@@ -37,27 +37,27 @@ class TrackController extends Controller
      * Store a newly created resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
     {
         $request->merge(['user_id' => $request->user()->id]);
 
+        /** @var Track $track */
         if ($track = Track::find($request->id)) {
-            if ($request->end && $request->date) {
-                $request->merge(['end' => $request->date . ' ' . $request->end ]);
-            }
-
-            if ($request->end && !$request->date) {
-                $request->merge(['end' => date('Y-m-d') . ' ' . $request->end ]);
-            }
-
-            $track->update($request->all());
+//            if ($request->end && $request->date) {
+//                $request->merge(['end' => $request->date . ' ' . $request->end ]);
+//            }
+//
+//            if ($request->end && !$request->date) {
+//                $request->merge(['end' => date('Y-m-d') . ' ' . $request->end ]);
+//            }
+            $inputs = array_filter($request->except(['date', 'activated']));
+            $track->update($inputs);
             $track->save();
         }else{
-            $request->merge(['start' => $request->date . ' ' . $request->start ]);
-            if ($request->end)
-                $request->merge(['end' => $request->date . ' ' . $request->end ]);
+//            $request->merge(['start' => $request->date . ' ' . $request->start ]);
+//            if ($request->end)
+//                $request->merge(['end' => $request->date . ' ' . $request->end ]);
             $track = Track::create($request->except('date'));
         }
 

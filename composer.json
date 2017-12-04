@@ -1,3 +1,4 @@
+
 {
     "name": "laravel/laravel",
     "description": "The Laravel Framework.",
@@ -54,6 +55,7 @@
     "config": {
         "preferred-install": "dist",
         "sort-packages": true,
-        "optimize-autoloader": true
+        "optimize-autoloader": true,
+	"platform": {"php": "7.0.22"}
     }
 }

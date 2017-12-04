@@ -18123,9 +18123,9 @@ if (token) {
 
     // Define as an anonymous module so, through path mapping, it can be
     // referenced as the "underscore" module.
-    !(__WEBPACK_AMD_DEFINE_RESULT__ = function() {
+    !(__WEBPACK_AMD_DEFINE_RESULT__ = (function() {
       return _;
-    }.call(exports, __webpack_require__, exports, module),
+    }).call(exports, __webpack_require__, exports, module),
 				__WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));
   }
   // Check for `exports` after `define` in case a build optimizer adds it.
@@ -28388,9 +28388,9 @@ jQuery.nodeName = nodeName;
 // https://github.com/jrburke/requirejs/wiki/Updating-existing-libraries#wiki-anon
 
 if ( true ) {
-	!(__WEBPACK_AMD_DEFINE_ARRAY__ = [], __WEBPACK_AMD_DEFINE_RESULT__ = function() {
+	!(__WEBPACK_AMD_DEFINE_ARRAY__ = [], __WEBPACK_AMD_DEFINE_RESULT__ = (function() {
 		return jQuery;
-	}.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__),
+	}).apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__),
 				__WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));
 }
 
@@ -31928,9 +31928,9 @@ function kindOf(val) {
 
 
   if (true) {
-    !(__WEBPACK_AMD_DEFINE_RESULT__ = function () {
+    !(__WEBPACK_AMD_DEFINE_RESULT__ = (function () {
       return dateFormat;
-    }.call(exports, __webpack_require__, exports, module),
+    }).call(exports, __webpack_require__, exports, module),
 				__WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));
   } else if (typeof exports === 'object') {
     module.exports = dateFormat;
@@ -44529,7 +44529,7 @@ var Component = normalizeComponent(
   __vue_scopeId__,
   __vue_module_identifier__
 )
-Component.options.__file = "resources\\assets\\js\\components\\CurrentTracks.vue"
+Component.options.__file = "resources/assets/js/components/CurrentTracks.vue"
 if (Component.esModule && Object.keys(Component.esModule).some(function (key) {  return key !== "default" && key.substr(0, 2) !== "__"})) {  console.error("named exports are not supported in *.vue files.")}
 
 /* hot reload */
@@ -44539,9 +44539,9 @@ if (false) {(function () {
   if (!hotAPI.compatible) return
   module.hot.accept()
   if (!module.hot.data) {
-    hotAPI.createRecord("data-v-4f2a5cfa", Component.options)
+    hotAPI.createRecord("data-v-38d3c23a", Component.options)
   } else {
-    hotAPI.reload("data-v-4f2a5cfa", Component.options)
+    hotAPI.reload("data-v-38d3c23a", Component.options)
 ' + '  }
   module.hot.dispose(function (data) {
     disposed = true
@@ -44666,8 +44666,11 @@ module.exports = function normalizeComponent (
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__SingleTrack_vue__ = __webpack_require__(54);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__SingleTrack_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__SingleTrack_vue__);
 //
 //
+
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     resource: null,
@@ -44676,6 +44679,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             countTracks: null,
             status: null,
             tracks: [],
+            editedStart: '',
+            editedEnd: '',
             editedtrack: {
                 date: '',
                 category: '',
@@ -44687,6 +44692,10 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             }
         };
     },
+
+    components: {
+        'single-track': __WEBPACK_IMPORTED_MODULE_0__SingleTrack_vue___default.a
+    },
     mounted: function mounted() {
         var _this = this;
 
@@ -44695,45 +44704,104 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             _this.tracks = response.body;
             _this.countTracks = _this.tracks.length;
 
-            // Add the activated property for toggle in the temlate
-            _this.tracks.forEach(function (el) {
-                Vue.set(el, 'activated', false);
-                Vue.set(el, 'date', dateformat(el.start, 'yyyy-mm-dd'));
-            });
+            // Add the activated property for toggle in the template
+            _this.addProperties();
 
             // Set the default values
-            _this.editedtrack.start = _this.dates.length ? _this.dates[_this.dates.length - 1].start : '';
+            _this.editedtrack.start = _this.tracks.length ? _this.tracks[_this.tracks.length - 1].start : '';
             _this.editedtrack.date = dateformat(new Date(), 'yyyy-mm-dd');
         });
     },
 
-    computed: {
-        dates: function dates() {
-            return this.tracks.map(function (b) {
-                b.start = dateformat(b.start, "HH:MM");
-                if (b.end) {
-                    b.end = dateformat(b.end, "HH:MM");
-                }
-                return b;
-            });
-        }
+    updated: function updated() {
+        this.countTracks = this.tracks.length;
+        this.addProperties();
     },
     methods: {
-        sendTrack: function sendTrack() {
+        sendTrack: function sendTrack(trackToSend) {
             var _this2 = this;
 
+            this.resource.save(trackToSend).then(function (response) {
+                if (response.status === 200) {
+                    var sentTrack = response.body;
+                    var trackIndex = _this2.indexById(sentTrack.id);
+                    console.log('senttrack' + sentTrack.id);
+                    console.log('trackindex' + trackIndex);
+                    if (trackIndex >= 0) {
+                        console.log('track');
+                        console.log(trackIndex);
+                        _this2.tracks[trackIndex] = sentTrack;
+                    } else {
+                        console.log('else');
+                        _this2.tracks.push(sentTrack);
+                    }
+                }
+            }, function (response) {
+                return response;
+            });
+        },
+        sendInputTrack: function sendInputTrack() {
+
+            if (this.editedtrack.id === null) this.status = 'edition';
+
             // In case of a new track, check if the last one is still running
-            if (null === this.status) {
-                var lastDate = this.dates[this.dates.length - 1];
-                if (lastDate.end === null) {
-                    this.resource.save({ id: lastDate.id, end: dateformat(new Date(), "HH:MM") }).then(function (response) {
-                        _this2.dates[_this2.dates.length - 1].end = response.end;
-                    });
+            if (null === this.status && this.tracks.length) {
+                var lastTrack = this.tracks[this.tracks.length - 1];
+                console.log('lastTrack ' + lastTrack);
+                if (!lastTrack.end) {
+                    this.stopTrack(lastTrack);
                 }
             }
-            this.resource.save(this.editedtrack).then(function (response) {
-                console.log(response);
+
+            this.sendTrack(this.editedtrack);
+            //                console.log(sent);
+            //                if  (sent.body) {
+            //                    this.tracks.push(sent.body);
+            this.emptyEditedTrack();
+            //                }
+        },
+        stopTrack: function stopTrack(val) {
+            var i = this.indexById(val.id);
+            this.tracks[i].end = dateformat(new Date());
+            var sent = this.sendTrack(this.tracks[i]);
+            //                if (sent.body){
+            //                    this.tracks[i] = sent.body;
+            //                }
+        },
+        emptyEditedTrack: function emptyEditedTrack() {
+            this.status = this.editedtrack.category = this.editedtrack.id = this.editedtrack.start = this.editedtrack.end = this.editedtrack.comment = "";
+            this.editedtrack.date = dateformat(new Date(), 'yyyy-mm-dd');
+        },
+        addProperties: function addProperties() {
+            this.tracks.forEach(function (el) {
+                Vue.set(el, 'activated', false);
+                Vue.set(el, 'date', dateformat(el.start, 'yyyy-mm-dd'));
+                if (!el.end) {
+                    Vue.set(el, 'end', '');
+                }
             });
+        },
+        indexById: function indexById(id) {
+            var index = this.tracks.map(function (tracks) {
+                return tracks.id;
+            }).indexOf(id);
+            return index;
+        }
+    },
+    watch: {
+        editedStart: function editedStart(val) {
+            if (val) {
+                this.editedtrack.start = dateformat(this.editedtrack.date + ' ' + val);
+            } else {
+                this.editedtrack.start = '';
+            }
+        },
+        editedEnd: function editedEnd(val) {
+            if (val) {
+                this.editedtrack.end = dateformat(this.editedtrack.date + ' ' + val);
+            } else {
+                this.editedtrack.end = '';
+            }
         }
     }
 });
@@ -44743,6 +44811,211 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /***/ (function(module, exports) {
 
 // removed by extract-text-webpack-plugin
+
+/***/ }),
+/* 45 */,
+/* 46 */,
+/* 47 */,
+/* 48 */,
+/* 49 */,
+/* 50 */,
+/* 51 */,
+/* 52 */,
+/* 53 */,
+/* 54 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var disposed = false
+var normalizeComponent = __webpack_require__(42)
+/* script */
+var __vue_script__ = __webpack_require__(55)
+/* template */
+var __vue_template__ = __webpack_require__(56)
+/* template functional */
+var __vue_template_functional__ = false
+/* styles */
+var __vue_styles__ = null
+/* scopeId */
+var __vue_scopeId__ = null
+/* moduleIdentifier (server only) */
+var __vue_module_identifier__ = null
+var Component = normalizeComponent(
+  __vue_script__,
+  __vue_template__,
+  __vue_template_functional__,
+  __vue_styles__,
+  __vue_scopeId__,
+  __vue_module_identifier__
+)
+Component.options.__file = "resources/assets/js/components/SingleTrack.vue"
+if (Component.esModule && Object.keys(Component.esModule).some(function (key) {  return key !== "default" && key.substr(0, 2) !== "__"})) {  console.error("named exports are not supported in *.vue files.")}
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-118c9808", Component.options)
+  } else {
+    hotAPI.reload("data-v-118c9808", Component.options)
+' + '  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+/* 55 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+    name: 'single-track',
+    props: ['track'],
+    computed: {
+        startTime: {
+            get: function get() {
+                return dateformat(this.track.start, 'HH:MM');
+            },
+            set: function set(value) {
+                this.track.start = dateformat(this.track.date + value);
+            }
+        },
+        endTime: {
+            get: function get() {
+                return this.track.end ? dateformat(this.track.end, 'HH:MM') : '';
+            },
+            set: function set(value) {
+                this.track.end = dateformat(this.track.date + value);
+            }
+        }
+    },
+    methods: {
+        stop: function stop() {
+            this.$emit('stop', this.track);
+        }
+    }
+});
+
+/***/ }),
+/* 56 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c(
+    "div",
+    {
+      staticClass: "track",
+      class: { clickable: _vm.track.comment },
+      on: {
+        click: function($event) {
+          _vm.track.activated = !_vm.track.activated
+        }
+      }
+    },
+    [
+      _c("div", { staticClass: "upper" }, [
+        _c("div", { staticClass: "hour" }, [
+          _vm._v(
+            "\n            " +
+              _vm._s(_vm.startTime) +
+              " - " +
+              _vm._s(_vm.endTime) +
+              "\n        "
+          )
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "category" }, [
+          _vm._v("\n            " + _vm._s(_vm.track.category) + "\n        ")
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "total" }, [
+          _vm._v("\n            " + _vm._s(_vm.track.total) + "\n        ")
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "actions" }, [
+          _c(
+            "div",
+            {
+              directives: [
+                {
+                  name: "show",
+                  rawName: "v-show",
+                  value: !_vm.track.end,
+                  expression: "!track.end"
+                }
+              ],
+              staticClass: "stop",
+              on: { click: _vm.stop }
+            },
+            [_vm._v("stop")]
+          )
+        ])
+      ]),
+      _vm._v(" "),
+      _c("div", { staticClass: "lower" }, [
+        _c(
+          "div",
+          {
+            directives: [
+              {
+                name: "show",
+                rawName: "v-show",
+                value: _vm.track.activated,
+                expression: "track.activated"
+              }
+            ],
+            staticClass: "comment"
+          },
+          [_vm._v("\n            " + _vm._s(_vm.track.comment) + "\n        ")]
+        )
+      ])
+    ]
+  )
+}
+var staticRenderFns = []
+render._withStripped = true
+module.exports = { render: render, staticRenderFns: staticRenderFns }
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+    require("vue-hot-reload-api")      .rerender("data-v-118c9808", module.exports)
+  }
+}
 
 /***/ })
 /******/ ]);
