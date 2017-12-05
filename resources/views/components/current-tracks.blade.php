@@ -7,7 +7,9 @@
                     v-for="(track, key) in tracks"
                     :key="track.id"
                     :track="track"
+                    :status="status"
                     @@stop="stopTrack"
+                    @deletetrack="deleteTrack"
                 >
                 </li>
             </ul>

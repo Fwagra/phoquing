@@ -98,6 +98,16 @@
                 this.sendTrack(this.tracks[i]);
 
             },
+            deleteTrack: function (val) {
+                this.resource.delete({id: val.id}).then((response) => {
+                    if (response.status === 200) {
+                        let i =  this.indexById(val.id);
+                        this.tracks.splice(i, 1);
+                    }
+                }, (response) => {
+                    this.errors = response.body.errors;
+                });
+            },
             // Reset values of temporary track
             emptyEditedTrack: function() {
                 this.status =

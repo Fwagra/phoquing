@@ -23,8 +23,9 @@
                     {{ tempTotal }}
                 </span>
             </div>
-            <div class="actions">
+            <div class="actions" v-show="!this.status">
                 <div class="stop" @click="stop" v-show="!track.end">stop</div>
+                <div class="delete" @click="deleteTrack">delete</div>
             </div>
         </div>
         <div class="lower" >
@@ -42,10 +43,12 @@
                 tempTotal: '0',
                 currentTime: '',
                 activated: false,
+                deleteConfirm: false,
             }
         },
         props: [
-            'track'
+            'track',
+            'status'
         ],
         mounted: function () {
             this.liveCalcs();
@@ -75,6 +78,9 @@
         methods: {
             stop : function () {
                 this.$emit('stop', this.track);
+            },
+            deleteTrack: function () {
+                this.$emit('deletetrack', this.track);
             },
             liveCalcs: function () {
                 let tempTotal = 0;
