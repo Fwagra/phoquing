@@ -24,5 +24,10 @@
             <input name="category" type="text" v-model="editedtrack.category">
             <input type="button" @click="sendInputTrack" value="{{ trans('tracks.add_button') }}">
         </div>
+        <div class="errors" v-show="errors">
+            <div class="error" v-for="(error, key, index) in errors">
+                @{{ error[0] }}
+            </div>
+        </div>
     </div>
 </current-tracks>

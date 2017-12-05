@@ -20,7 +20,6 @@ class Track extends Model
     /**
      * Force format for start and end columns
      * @param $value
-     * @return false|int
      */
     public function setStartAttribute($value) {
         $this->attributes['start'] = date('Y-m-d H:i:s',strtotime($value));

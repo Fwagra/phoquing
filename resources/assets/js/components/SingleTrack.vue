@@ -31,7 +31,7 @@
         computed: {
             startTime: {
                 get: function() {
-                    return dateformat(this.track.start, 'HH:MM');
+                    return dateformat(this.track.start, this.$hourFormat);
                 },
                 set: function(value) {
                     this.track.start = dateformat(this.track.date + value);

@@ -6,6 +6,7 @@
         resource: null,
         data () {
             return {
+                errors: '',
                 countTracks: null,
                 status: null,
                 tracks : [],
@@ -26,6 +27,7 @@
            'single-track': SingleTrack,
         },
         mounted() {
+
             this.resource = this.$resource('/tracks{/id}');
             this.resource.get().then((response) => {
                 this.tracks = response.body;
@@ -36,85 +38,110 @@
 
                 // Set the default values
                 this.editedtrack.start = (this.tracks.length) ? this.tracks[this.tracks.length -1].start : '';
-                this.editedtrack.date = dateformat(new Date(), 'yyyy-mm-dd');
+                this.editedtrack.date = dateformat(new Date(), this.$yearFormat);
+                this.editedStartDefault();
             })
         },
         updated: function () {
             this.countTracks = this.tracks.length;
             this.addProperties();
+
         },
         methods: {
+            // Send the provided track to DB and refresh the list
             sendTrack : function (trackToSend) {
                 this.resource.save(trackToSend).then((response) => {
                     if (response.status === 200) {
                         let sentTrack = response.body;
                         let trackIndex = this.indexById(sentTrack.id)
-                        console.log('senttrack' + sentTrack.id );
-                        console.log('trackindex' + trackIndex);
                         if (trackIndex >= 0) {
-                            console.log('track');
-                            console.log(trackIndex);
                            this.tracks[trackIndex] =  sentTrack;
                         } else {
-                            console.log('else');
                             this.tracks.push(sentTrack);
                         }
+                        this.emptyEditedTrack();
                     }
                 }, (response) => {
-                    return response;
+                    this.errors = response.body.errors;
                 });
             },
+            // Send the temporary track to DB
             sendInputTrack: function () {
 
                 if (this.editedtrack.id === null)
                     this.status = 'edition';
-
                 // In case of a new track, check if the last one is still running
-                if (null === this.status && this.tracks.length) {
+                if (!this.status && this.tracks.length) {
                     let lastTrack = this.tracks[this.tracks.length -1];
-                    console.log('lastTrack '+ lastTrack);
                     if (!lastTrack.end){
                         this.stopTrack(lastTrack);
                     }
                 }
 
                 this.sendTrack(this.editedtrack);
-//                console.log(sent);
-//                if  (sent.body) {
-//                    this.tracks.push(sent.body);
-                    this.emptyEditedTrack();
-//                }
+
 
             },
+            // Set the end time of a track
             stopTrack: function (val) {
+
                 let i = this.indexById(val.id);
-                this.tracks[i].end = dateformat(new Date());
-                let sent = this.sendTrack(this.tracks[i]);
-//                if (sent.body){
-//                    this.tracks[i] = sent.body;
-//                }
+                let endDate = dateformat(new Date());
+                // If the current time is inferior than the start time, rewrite it
+                if (endDate < dateformat(this.tracks[i].start)){
+                    let newEndDate = new Date(this.tracks[i].start);
+                    newEndDate.setMinutes(newEndDate.getMinutes() + 1);
+                    this.tracks[i].end = dateformat(newEndDate);
+                } else {
+                    this.tracks[i].end = endDate;
+                }
+                this.sendTrack(this.tracks[i]);
+
             },
+            // Reset values of temporary track
             emptyEditedTrack: function() {
                 this.status =
                 this.editedtrack.category =
                 this.editedtrack.id =
                 this.editedtrack.start =
                 this.editedtrack.end =
+                this.editedEnd =
+                this.errors =
                 this.editedtrack.comment = "";
-                this.editedtrack.date = dateformat(new Date(), 'yyyy-mm-dd');
+                this.editedtrack.date = dateformat(new Date(), this.$yearFormat);
+                this.editedStartDefault();
             },
+            // Add new properties to the track list
             addProperties:function() {
+                let format = this.$yearFormat;
                 this.tracks.forEach(function (el) {
                     Vue.set(el, 'activated', false);
-                    Vue.set(el, 'date', dateformat(el.start, 'yyyy-mm-dd'));
+                    Vue.set(el, 'date', dateformat(el.start, format));
                     if (!el.end) {
                         Vue.set(el, 'end', '');
                     }
                 });
             },
+            // Return the index of track by its id
             indexById: function(id) {
                 let index = this.tracks.map(tracks => tracks.id).indexOf(id);
                 return index;
+            },
+            // Set the default start time according to the current tracks
+            editedStartDefault: function() {
+
+                if (this.tracks.length) {
+                    let lastTrack = this.tracks[this.tracks.length -1];
+                    if (lastTrack.end){
+                        this.editedStart =  dateformat(lastTrack.end, this.$hourFormat);
+                    } else {
+                        this.editedStart =  dateformat(new Date(), this.$hourFormat);
+
+                    }
+                }
+                else {
+                    this.editedStart =  dateformat(new Date(), this.$hourFormat);
+                }
             }
         },
         watch : {

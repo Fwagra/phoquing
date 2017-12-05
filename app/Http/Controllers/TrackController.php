@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\StoreTrack;
 use App\Track;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -38,26 +39,20 @@ class TrackController extends Controller
      *
      * @param  \Illuminate\Http\Request  $request
      */
-    public function store(Request $request)
+    public function store(StoreTrack $request)
     {
         $request->merge(['user_id' => $request->user()->id]);
+        if (!$request->total) {
+            $request->merge(['total' => 1]);
+        }
 
         /** @var Track $track */
         if ($track = Track::find($request->id)) {
-//            if ($request->end && $request->date) {
-//                $request->merge(['end' => $request->date . ' ' . $request->end ]);
-//            }
-//
-//            if ($request->end && !$request->date) {
-//                $request->merge(['end' => date('Y-m-d') . ' ' . $request->end ]);
-//            }
+
             $inputs = array_filter($request->except(['date', 'activated']));
             $track->update($inputs);
             $track->save();
         }else{
-//            $request->merge(['start' => $request->date . ' ' . $request->start ]);
-//            if ($request->end)
-//                $request->merge(['end' => $request->date . ' ' . $request->end ]);
             $track = Track::create($request->except('date'));
         }
 
