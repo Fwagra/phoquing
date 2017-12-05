@@ -46,7 +46,6 @@
         updated: function () {
             this.countTracks = this.tracks.length;
             this.addProperties();
-
         },
         methods: {
             // Send the provided track to DB and refresh the list
@@ -104,7 +103,6 @@
                 this.status =
                 this.editedtrack.category =
                 this.editedtrack.id =
-                this.editedtrack.start =
                 this.editedtrack.end =
                 this.editedEnd =
                 this.errors =
@@ -116,7 +114,6 @@
             addProperties:function() {
                 let format = this.$yearFormat;
                 this.tracks.forEach(function (el) {
-                    Vue.set(el, 'activated', false);
                     Vue.set(el, 'date', dateformat(el.start, format));
                     if (!el.end) {
                         Vue.set(el, 'end', '');
@@ -137,7 +134,6 @@
                         this.editedStart =  dateformat(lastTrack.end, this.$hourFormat);
                     } else {
                         this.editedStart =  dateformat(new Date(), this.$hourFormat);
-
                     }
                 }
                 else {

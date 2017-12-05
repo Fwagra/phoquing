@@ -44774,7 +44774,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         },
         // Reset values of temporary track
         emptyEditedTrack: function emptyEditedTrack() {
-            this.status = this.editedtrack.category = this.editedtrack.id = this.editedtrack.start = this.editedtrack.end = this.editedEnd = this.errors = this.editedtrack.comment = "";
+            this.status = this.editedtrack.category = this.editedtrack.id = this.editedtrack.end = this.editedEnd = this.errors = this.editedtrack.comment = "";
             this.editedtrack.date = dateformat(new Date(), this.$yearFormat);
             this.editedStartDefault();
         },
@@ -44782,7 +44782,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         addProperties: function addProperties() {
             var format = this.$yearFormat;
             this.tracks.forEach(function (el) {
-                Vue.set(el, 'activated', false);
                 Vue.set(el, 'date', dateformat(el.start, format));
                 if (!el.end) {
                     Vue.set(el, 'end', '');
@@ -44920,21 +44919,30 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     name: 'single-track',
     data: function data() {
         return {
-            tempTotal: '0'
+            tempTotal: '0',
+            currentTime: '',
+            activated: false
         };
     },
 
     props: ['track'],
     mounted: function mounted() {
-        this.calculateTempTotal();
+        this.liveCalcs();
         var self = this;
         setInterval(function () {
-            self.calculateTempTotal();
+            self.liveCalcs();
         }, 1000 * 60);
     },
     computed: {
@@ -44959,14 +44967,15 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         stop: function stop() {
             this.$emit('stop', this.track);
         },
-        calculateTempTotal: function calculateTempTotal() {
+        liveCalcs: function liveCalcs() {
             var tempTotal = 0;
             if (!this.track.end && this.track.start) {
                 var currentTime = Date.now();
                 var startTime = Date.parse(this.track.start);
                 tempTotal = mathPhp.round((currentTime - startTime) / 3600000, 1);
             }
-            this.tempTotal = tempTotal;
+            this.tempTotal = tempTotal >= 0 ? tempTotal : 0;
+            this.currentTime = dateformat(new Date(), this.$hourFormat);
         }
     }
 });
@@ -44986,20 +44995,31 @@ var render = function() {
       class: { clickable: _vm.track.comment },
       on: {
         click: function($event) {
-          _vm.track.activated = !_vm.track.activated
+          _vm.activated = !_vm.activated
         }
       }
     },
     [
       _c("div", { staticClass: "upper" }, [
         _c("div", { staticClass: "hour" }, [
-          _vm._v(
-            "\n            " +
-              _vm._s(_vm.startTime) +
-              " - " +
-              _vm._s(_vm.endTime) +
-              "\n        "
-          )
+          _vm._v("\n            " + _vm._s(_vm.startTime) + " - "),
+          _c("span", { staticClass: "end", class: { real: _vm.track.end } }, [
+            _vm.track.end
+              ? _c("span", [
+                  _vm._v(
+                    "\n                    " +
+                      _vm._s(_vm.endTime) +
+                      "\n                "
+                  )
+                ])
+              : _c("span", [
+                  _vm._v(
+                    "\n                    " +
+                      _vm._s(_vm.currentTime) +
+                      "\n                "
+                  )
+                ])
+          ])
         ]),
         _vm._v(" "),
         _c("div", { staticClass: "category" }, [
@@ -45007,45 +45027,21 @@ var render = function() {
         ]),
         _vm._v(" "),
         _c("div", { staticClass: "total", class: { real: _vm.track.total } }, [
-          _c(
-            "span",
-            {
-              directives: [
-                {
-                  name: "show",
-                  rawName: "v-show",
-                  value: _vm.track.total,
-                  expression: "track.total"
-                }
-              ]
-            },
-            [
-              _vm._v(
-                "\n                " +
-                  _vm._s(_vm.track.total) +
-                  "\n            "
-              )
-            ]
-          ),
-          _vm._v(" "),
-          _c(
-            "span",
-            {
-              directives: [
-                {
-                  name: "show",
-                  rawName: "v-show",
-                  value: _vm.tempTotal,
-                  expression: "tempTotal"
-                }
-              ]
-            },
-            [
-              _vm._v(
-                "\n                " + _vm._s(_vm.tempTotal) + "\n            "
-              )
-            ]
-          )
+          _vm.track.total
+            ? _c("span", [
+                _vm._v(
+                  "\n                " +
+                    _vm._s(_vm.track.total) +
+                    "\n            "
+                )
+              ])
+            : _c("span", [
+                _vm._v(
+                  "\n                " +
+                    _vm._s(_vm.tempTotal) +
+                    "\n            "
+                )
+              ])
         ]),
         _vm._v(" "),
         _c("div", { staticClass: "actions" }, [
@@ -45076,8 +45072,8 @@ var render = function() {
               {
                 name: "show",
                 rawName: "v-show",
-                value: _vm.track.activated,
-                expression: "track.activated"
+                value: _vm.activated,
+                expression: "activated"
               }
             ],
             staticClass: "comment"

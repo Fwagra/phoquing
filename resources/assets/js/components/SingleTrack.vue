@@ -1,18 +1,25 @@
 <template>
-    <div class="track" @click="track.activated = !track.activated"
+    <div class="track" @click="activated = !activated"
          :class="{clickable:track.comment}">
         <div class="upper">
             <div class="hour">
-                {{ startTime }} - {{ endTime }}
+                {{ startTime }} - <span class="end" :class="{real: track.end}">
+                    <span v-if="track.end">
+                        {{ endTime }}
+                    </span>
+                    <span v-else>
+                        {{ currentTime }}
+                    </span>
+                </span>
             </div>
             <div class="category">
                 {{ track.category }}
             </div>
             <div class="total" :class="{real: track.total}">
-                <span v-show="track.total">
+                <span v-if="track.total">
                     {{ track.total }}
                 </span>
-                <span v-show="tempTotal">
+                <span v-else>
                     {{ tempTotal }}
                 </span>
             </div>
@@ -21,7 +28,7 @@
             </div>
         </div>
         <div class="lower" >
-            <div class="comment" v-show="track.activated">
+            <div class="comment" v-show="activated">
                 {{ track.comment }}
             </div>
         </div>
@@ -32,17 +39,19 @@
         name: 'single-track',
         data() {
             return {
-                tempTotal: '0'
+                tempTotal: '0',
+                currentTime: '',
+                activated: false,
             }
         },
         props: [
             'track'
         ],
         mounted: function () {
-            this.calculateTempTotal();
+            this.liveCalcs();
             let self = this;
             setInterval(function () {
-                self.calculateTempTotal();
+                self.liveCalcs();
             }, 1000 * 60);
         },
         computed: {
@@ -67,14 +76,15 @@
             stop : function () {
                 this.$emit('stop', this.track);
             },
-            calculateTempTotal: function () {
+            liveCalcs: function () {
                 let tempTotal = 0;
                 if (!this.track.end && this.track.start) {
                     let currentTime = Date.now();
                     let startTime = Date.parse(this.track.start);
                     tempTotal = mathPhp.round((currentTime - startTime) / 3600000, 1);
                 }
-                this.tempTotal = tempTotal;
+                this.tempTotal = (tempTotal >= 0) ? tempTotal : 0;
+                this.currentTime = dateformat(new Date(), this.$hourFormat);
             }
         }
     }
