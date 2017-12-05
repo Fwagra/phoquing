@@ -7,6 +7,7 @@
 
 require('./bootstrap');
 dateformat = require('dateformat');
+mathPhp = require('locutus/php/math');
 window.Vue = require('vue');
 /**
  * Next, we will create a fresh Vue application instance and attach it to

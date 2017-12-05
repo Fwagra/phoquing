@@ -45,15 +45,15 @@ class TrackController extends Controller
         if (!$request->total) {
             $request->merge(['total' => 1]);
         }
+        $inputs = array_filter($request->except(['date', 'activated', 'tempTotal']));
 
         /** @var Track $track */
         if ($track = Track::find($request->id)) {
 
-            $inputs = array_filter($request->except(['date', 'activated']));
             $track->update($inputs);
             $track->save();
         }else{
-            $track = Track::create($request->except('date'));
+            $track = Track::create($inputs);
         }
 
         return $track;

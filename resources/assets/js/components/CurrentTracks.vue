@@ -10,6 +10,7 @@
                 countTracks: null,
                 status: null,
                 tracks : [],
+                currentTime : '',
                 editedStart : '',
                 editedEnd : '',
                 editedtrack : {
@@ -19,7 +20,7 @@
                     end: '',
                     start: '',
                     id: '',
-                    total: '',
+                    total: '0',
                 }
             }
         },
@@ -120,7 +121,7 @@
                     if (!el.end) {
                         Vue.set(el, 'end', '');
                     }
-                });
+                }, this);
             },
             // Return the index of track by its id
             indexById: function(id) {
@@ -142,6 +143,14 @@
                 else {
                     this.editedStart =  dateformat(new Date(), this.$hourFormat);
                 }
+            },
+            getTempTotal: function(track) {
+                if (track.start && !track.end) {
+                    let currentTime = Date.now();
+                    let startTime = Date.parse(track.start);
+                    return mathPhp.round((currentTime - startTime) / 3600000, 1);
+                }
+                return 0;
             }
         },
         watch : {
