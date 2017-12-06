@@ -25,7 +25,13 @@
             </div>
             <div class="actions" v-show="!this.status">
                 <div class="stop" @click="stop" v-show="!track.end">stop</div>
-                <div class="delete" @click="deleteTrack">delete</div>
+                <div class="delete" v-show="!deleteConfirm"  @click="deleteConfirm = !deleteConfirm">delete</div>
+                <transition name="rollin">
+                    <div class="delete-actions" v-show="deleteConfirm">
+                        <div class="delete"   @click="deleteTrack">delete confirm</div>
+                        <div class="delete-cancel"  @click="deleteConfirm = !deleteConfirm">delete cancel</div>
+                    </div>
+                </transition>
             </div>
         </div>
         <div class="lower" >
