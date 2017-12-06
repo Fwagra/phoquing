@@ -98,6 +98,18 @@
                 this.sendTrack(this.tracks[i]);
 
             },
+            editTrack: function (val) {
+                this.status = "edition";
+                for (let property in this.editedtrack) {
+                    if (val.hasOwnProperty(property))
+                        this.editedtrack[property] = val[property];
+                }
+
+                this.editedStart = dateformat(val.start, this.$hourFormat);
+                if (val.end)
+                    this.editedEnd = dateformat(val.end, this.$hourFormat);
+
+            },
             deleteTrack: function (val) {
                 this.resource.delete({id: val.id}).then((response) => {
                     if (response.status === 200) {
@@ -107,6 +119,10 @@
                 }, (response) => {
                     this.errors = response.body.errors;
                 });
+            },
+            cancelEditTrack: function () {
+                this.status = '';
+                this.emptyEditedTrack();
             },
             // Reset values of temporary track
             emptyEditedTrack: function() {

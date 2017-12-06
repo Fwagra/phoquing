@@ -9,6 +9,7 @@
                     :track="track"
                     :status="status"
                     @@stop="stopTrack"
+                    @edit="editTrack"
                     @deletetrack="deleteTrack"
                 >
                 </li>
@@ -25,6 +26,7 @@
             <input name="comment" type="text" v-model="editedtrack.comment">
             <input name="category" type="text" v-model="editedtrack.category">
             <input type="button" @click="sendInputTrack" value="{{ trans('tracks.add_button') }}">
+            <input v-show="status == 'edition'" type="button" @click="cancelEditTrack" value="{{ trans('tracks.cancel_edit_button') }}">
         </div>
         <div class="errors" v-show="errors">
             <div class="error" v-for="(error, key, index) in errors">

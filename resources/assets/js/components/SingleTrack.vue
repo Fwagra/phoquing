@@ -1,5 +1,5 @@
 <template>
-    <div class="track" @click="activated = !activated"
+    <div class="track"
          :class="{clickable:track.comment}">
         <div class="upper">
             <div class="hour">
@@ -12,7 +12,7 @@
                     </span>
                 </span>
             </div>
-            <div class="category">
+            <div class="category" @click="activated = !activated">
                 {{ track.category }}
             </div>
             <div class="total" :class="{real: track.total}">
@@ -25,6 +25,7 @@
             </div>
             <div class="actions" v-show="!this.status">
                 <div class="stop" @click="stop" v-show="!track.end">stop</div>
+                <div class="edit" @click="edit">edit</div>
                 <div class="delete" v-show="!deleteConfirm"  @click="deleteConfirm = !deleteConfirm">delete</div>
                 <transition name="rollin">
                     <div class="delete-actions" v-show="deleteConfirm">
@@ -84,6 +85,9 @@
         methods: {
             stop : function () {
                 this.$emit('stop', this.track);
+            },
+            edit : function () {
+                this.$emit('edit', this.track);
             },
             deleteTrack: function () {
                 this.$emit('deletetrack', this.track);
