@@ -2,6 +2,7 @@
 
 <script>
     import SingleTrack from './SingleTrack.vue'
+    import Stats from './Stats.vue'
     export default {
         resource: null,
         data () {
@@ -26,6 +27,7 @@
         },
         components: {
            'single-track': SingleTrack,
+           'stats': Stats,
         },
         mounted() {
 
@@ -55,7 +57,7 @@
                         let sentTrack = response.body;
                         let trackIndex = this.indexById(sentTrack.id)
                         if (trackIndex >= 0) {
-                           this.tracks[trackIndex] =  sentTrack;
+                           this.tracks.splice(trackIndex, 1, sentTrack);
                         } else {
                             this.tracks.push(sentTrack);
                         }

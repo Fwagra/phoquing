@@ -1,22 +1,34 @@
 <current-tracks inline-template>
     <div class="container">
-        <div class="content" v-show="countTracks > 0">
-            <ul>
-                <li
-                    is="single-track"
-                    v-for="(track, key) in tracks"
-                    :key="track.id"
-                    :track="track"
-                    :status="status"
-                    @@stop="stopTrack"
-                    @edit="editTrack"
-                    @deletetrack="deleteTrack"
-                >
-                </li>
-            </ul>
+        <div class="time-container">
+            <h2> {{ trans('tracks.tracks_title') }}</h2>
+            <div class="content" v-if="countTracks > 0">
+                <ul>
+                    <li
+                        is="single-track"
+                        v-for="(track, key) in tracks"
+                        :key="track.id"
+                        :track="track"
+                        :status="status"
+                        @@stop="stopTrack"
+                        @edit="editTrack"
+                        @deletetrack="deleteTrack"
+                    >
+                    </li>
+                </ul>
+            </div>
+            <div class="content" v-else-if="countTracks == 0">
+                {{ trans('tracks.no_tracks_found') }}
+            </div>
+            <div class="content" v-else>
+                {{ trans('tracks.loading_tracks') }}
+            </div>
         </div>
-        <div class="content" v-show="countTracks == 0">
-            {{ trans('tracks.no_tracks_found') }}
+        <div class="stats-container">
+            <div class="content" v-if="countTracks > 0">
+                <h2> {{ trans('tracks.stats_title') }}</h2>
+                <stats :tracks="tracks"></stats>
+            </div>
         </div>
 
         <div class="form">
