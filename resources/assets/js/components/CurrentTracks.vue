@@ -3,6 +3,7 @@
 <script>
     import SingleTrack from './SingleTrack.vue'
     import Stats from './Stats.vue'
+    import Autocomplete from './Autocomplete.vue'
     export default {
         resource: null,
         data () {
@@ -28,6 +29,7 @@
         components: {
            'single-track': SingleTrack,
            'stats': Stats,
+           'autocomplete': Autocomplete
         },
         mounted() {
 
@@ -175,6 +177,9 @@
                     return mathPhp.round((currentTime - startTime) / 3600000, 1);
                 }
                 return 0;
+            },
+            getSourceCategories: function () {
+                return 'test';
             }
         },
         watch : {

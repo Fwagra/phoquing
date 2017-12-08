@@ -36,7 +36,8 @@
             <input name="start" type="time" v-model="editedStart">
             <input name="end" type="time" v-model="editedEnd">
             <input name="comment" type="text" v-model="editedtrack.comment">
-            <input name="category" type="text" v-model="editedtrack.category">
+            {{--<input name="category" type="text" v-model="editedtrack.category">--}}
+            <autocomplete :selection="editedtrack.category" v-model="editedtrack.category"></autocomplete>
             <input type="button" @click="sendInputTrack" value="{{ trans('tracks.add_button') }}">
             <input v-show="status == 'edition'" type="button" @click="cancelEditTrack" value="{{ trans('tracks.cancel_edit_button') }}">
         </div>

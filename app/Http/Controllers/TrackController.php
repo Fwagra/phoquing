@@ -7,6 +7,7 @@ use App\Track;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 class TrackController extends Controller
 {
@@ -70,5 +71,23 @@ class TrackController extends Controller
     {
         Track::destroy($id);
         return $id;
+    }
+
+    /**
+     * Return a list of categories available for the current user
+     * @param $q
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function getCategories($q)
+    {
+        $user = Auth::id();
+        $categories = DB::table('tracks')
+                        ->where('user_id',$user)
+                        ->where('category', 'LIKE', '%'.$q.'%')
+                        ->groupBy('category')
+                        ->limit(5)
+                        ->pluck('category');
+
+        return response()->json($categories);
     }
 }
