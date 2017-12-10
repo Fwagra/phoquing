@@ -1,0 +1,58 @@
+html {
+  font-size: 100%;
+  height: 100%;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+}
+body {
+  font-family: 'Quicksand', sans-serif;
+  font-weight: 500;
+  color: $t-base;
+  font-size:1.15rem;
+  line-height:1.4;
+
+  margin: 0;
+
+  background: #304270;  /* fallback for old browsers */
+  background: -webkit-linear-gradient(to right top, #464260, #304270);
+  background: linear-gradient(to right top, #464260, #304270);
+
+}
+
+.collapsed {
+  display: none;
+}
+
+.navbar{
+  background: none;
+}
+
+a,
+a:visited
+{
+  text-decoration: none;
+  color:$primary;
+  transition: color .2s linear;
+}
+
+a:hover,
+a:active{
+  color: lighten($primary, 30%);
+  transition: color .2s linear;
+}
+
+.container{
+  max-width: 90%;
+  margin: 0 auto;
+}
+
+.navbar-brand {
+  padding: 1rem;
+  color: $t-base;
+  display: inline-block;
+  font-size: 1.5rem;
+}
+.high {
+  color: lighten($secondary, 10%);
+}

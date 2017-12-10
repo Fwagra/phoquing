@@ -1,7 +1,10 @@
-
-
 // Variables
 @import "variables";
+@import "base";
+@media screen and (min-width: $mq-medium) {
+ @import  "medium";
+}
 
-// Bootstrap
-@import "~bootstrap-sass/assets/stylesheets/bootstrap";
+@media screen and (min-width: $mq-large) {
+ @import  "large";
+}
