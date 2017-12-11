@@ -16,14 +16,16 @@ return [
     'failed' => 'Ces identifiants ne sont pas corrects.',
     'throttle' => 'Trop de tentatives de connexion. Réessayez dans :seconds secondes.',
     'login' => 'Connexion',
+    'logout' => 'Déconnexion',
     'email' => 'E-Mail',
+    'hello' => 'Bonjour :name',
     'password' => 'Mot de passe',
     'remember' => 'Se souvenir de moi',
     'register' => 'Inscription',
-    'name' => 'Name',
+    'name' => 'Nom',
     'forgot_password' => 'Mot de passe oublié ?',
     'reset_password' => 'Réinitialiser le mot de passe',
     'send_password' => 'Envoyer le lien de réinitialisation de mot de passe',
-    'confirm_password' => 'Confirm Password',
+    'confirm_password' => 'Confirmation du mot de passe',
 
 ];

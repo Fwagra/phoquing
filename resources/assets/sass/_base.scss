@@ -1,39 +1,41 @@
 html {
   font-size: 100%;
   height: 100%;
-  -webkit-box-sizing: border-box;
-  -moz-box-sizing: border-box;
+}
+* {
   box-sizing: border-box;
+
 }
 body {
-  font-family: 'Quicksand', sans-serif;
+  font-family: $font-family-base;
   font-weight: 500;
   color: $t-base;
   font-size:1.15rem;
   line-height:1.4;
 
   margin: 0;
+  height: 100%;
 
   background: #304270;  /* fallback for old browsers */
   background: -webkit-linear-gradient(to right top, #464260, #304270);
   background: linear-gradient(to right top, #464260, #304270);
-
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+}
+ul{
+  padding: 0;
+  margin: 0;
+}
+li{
+  list-style-type: none;
 }
 
-.collapsed {
-  display: none;
-}
-
-.navbar{
-  background: none;
-}
 
 a,
 a:visited
 {
   text-decoration: none;
   color:$primary;
-  transition: color .2s linear;
 }
 
 a:hover,
@@ -53,6 +55,208 @@ a:active{
   display: inline-block;
   font-size: 1.5rem;
 }
+.navbar .navbar-brand:hover {
+  color: $t-base;
+}
+.navbar-nav {
+  display: none;
+}
+.navbar a,
+.navbar a:visited {
+  color: $t-base;
+}
+.navbar a:hover{
+  color: lighten($secondary, 10%);
+}
 .high {
   color: lighten($secondary, 10%);
+}
+
+.panel{
+  margin: 0 auto;
+  background: $secondary;
+  border-radius: 4px;
+  box-shadow: darken($secondary, 50%)  0 6px 13px -10px;
+  color: $t-panel;
+
+}
+.actions-panel{
+  padding: 1rem 0 0;
+}
+.actions-panel > *{
+  display: block;
+  margin: 0 auto;
+  padding: 1rem 0;
+  text-align: center;
+}
+
+div[class^="panel-"] {
+  padding:1rem;
+  border-radius: 4px 4px 0 0;
+
+}
+.panel-heading{
+  background: darken($secondary, 10%);
+}
+
+.panel.edition{
+  background: $edit-body;
+  color: $edit-text;
+  .panel-heading{
+    background: $edit-head;
+  }
+  input:not([type="button"]){
+    background: darken($edit-head, 20%);
+  }
+}
+
+input:not([type="button"])
+{
+  border-radius: 3px;
+  border: none;
+  padding: .8rem;
+  background: darken($secondary, 30%);
+  color: $t-base;
+  font-family:$font-family-base;
+  font-weight: 500;
+  box-shadow: inset darken($secondary, 50%) 0 0 4px -1px;
+
+  &:focus {
+    outline:none;
+    background: darken($secondary, 35%);
+  }
+}
+.input-wrapper input:not([type="button"]){
+  width: 100%;
+}
+.input-wrapper {
+  margin: 1rem 0;
+}
+
+input:focus:required:invalid
+{
+  box-shadow: inset $error 0 0 0px 2px;
+}
+
+.remember-me{
+  font-weight: normal;
+}
+
+.btn{
+  background: $primary;
+  color: $t-base;
+  padding: 1rem 1.2rem;
+  font-weight: 500;
+  border-radius: 4px;
+  border: none;
+  font-family: $font-family-base;
+  font-size: 1rem;
+  cursor: pointer;
+}
+
+.btn:hover{
+  background-color: lighten($primary, 10%);
+  transition: background .2s linear;
+}
+.btn-error {
+  background-color: $error;
+}
+.btn-error:hover{
+  background-color: lighten($error, 10%);
+}
+.dropdown-menu {
+  display: none;
+}
+.open .dropdown-menu {
+  display: block;
+  position: absolute;
+  background: lighten($secondary,80%);
+  font-size: .9rem;
+  li{
+    padding: .5rem;
+  }
+  .active{
+    background: lighten($secondary, 10%);
+    color: $t-base;
+  }
+}
+
+.track .upper{
+  display: flex;
+  color: $t-base;
+
+  .actions .delete,
+  .actions .edit{
+    display: none;
+  }
+  &:hover .delete,
+  &:hover .edit{
+    display: inline-block;
+  }
+}
+
+.track{
+  padding: .3rem 0;
+  .delete,
+  .delete-confirm,
+  .delete-cancel,
+  .edit,
+  .stop{
+    text-indent: -9999px;
+    -webkit-background-size: contain;
+    background-size: contain;
+    height: 1rem;
+    width: 1rem;
+    cursor: pointer;
+  }
+  .delete-confirm{
+    width: 2rem;
+  }
+  .stop{
+    background: url('img/pause.svg') no-repeat;
+  }
+  .edit{
+    background: url('img/edit.svg') no-repeat;
+  }
+  .delete{
+    background: url('img/delete.svg') no-repeat;
+  }
+  .delete-cancel{
+    background: url('img/cancel.svg') no-repeat;
+  }
+  .delete-confirm{
+    background: url('img/confirm.svg') no-repeat;
+  }
+  .hour{
+    flex: 3;
+  }
+  .category{
+    flex: 4;
+    cursor: pointer;
+  }
+  .total{
+    flex:1;
+  }
+
+  .actions{
+    flex:2;
+    display: flex;
+    align-items: center;
+    .delete-actions{
+      display: flex;
+      align-items: center;
+    }
+  }
+  .actions > * {
+    display: inline-block;
+    margin-right: 10px;
+    opacity:0.8;
+  }
+  .lower .comment{
+    padding: 1rem;
+  }
+}
+.track .total:not(.real),
+.track .hour .end:not(.real){
+  color: rgba($t-panel, 0.7);
 }

@@ -79,7 +79,7 @@
 </script>
 <template>
     <div style="position:relative" v-bind:class="{'open':openSuggestion}">
-        <input  type="text"
+        <input  type="text" name="category"
                @keydown.enter = 'enter($event.target.value)'
                @keydown.tab = 'enter($event.target.value)'
                @keydown.down = 'down'
@@ -92,7 +92,7 @@
                 v-bind:class="{'active': isActive(index)}"
                 @click="suggestionClick(index)"
             >
-                <a href="#">{{ suggestion }}</a>
+                <span>{{ suggestion }}</span>
             </li>
         </ul>
     </div>

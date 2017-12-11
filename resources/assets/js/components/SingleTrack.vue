@@ -17,10 +17,10 @@
             </div>
             <div class="total" :class="{real: track.total}">
                 <span v-if="track.total">
-                    {{ track.total }}
+                    {{ track.total }} h
                 </span>
                 <span v-else>
-                    {{ tempTotal }}
+                    {{ tempTotal }} h
                 </span>
             </div>
             <div class="actions" v-show="!this.status">
@@ -29,7 +29,7 @@
                 <div class="delete" v-show="!deleteConfirm"  @click="deleteConfirm = !deleteConfirm">delete</div>
                 <transition name="rollin">
                     <div class="delete-actions" v-show="deleteConfirm">
-                        <div class="delete"   @click="deleteTrack">delete confirm</div>
+                        <div class="delete-confirm"   @click="deleteTrack">delete confirm</div>
                         <div class="delete-cancel"  @click="deleteConfirm = !deleteConfirm">delete cancel</div>
                     </div>
                 </transition>
