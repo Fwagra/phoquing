@@ -43,3 +43,32 @@ $font-family-base: 'Quicksand', sans-serif;
   url('../fonts/quicksand-v7-latin-700.woff2') format('woff2'), /* Chrome 26+, Opera 23+, Firefox 39+ */
   url('../fonts/quicksand-v7-latin-700.woff') format('woff'); /* Chrome 6+, Firefox 3.6+, IE 9+, Safari 5.1+ */
 }
+
+@keyframes rollinleft {
+  0% {
+    opacity:0;
+    transform:  translateX(-100%) rotate(-180deg);
+    transform-origin: 50%;
+  }
+  100% {
+    opacity: 1;
+    transform: translateX(0) rotate(0deg);
+    transform-origin: 50%;
+
+  }
+}
+
+@keyframes rollinright {
+  0% {
+    opacity:0;
+    transform:  translateX(100%) rotate(180deg);
+    transform-origin: 50%;
+
+  }
+  100% {
+    opacity: 1;
+    transform: translateX(0) rotate(0deg);
+    transform-origin: 50%;
+
+  }
+}

@@ -28,6 +28,8 @@ class Track extends Model
     public function setEndAttribute($value) {
         if (!empty($value))
             $this->attributes['end'] = date('Y-m-d H:i:s',strtotime($value));
+        else
+            $this->attributes['end'] = null;
     }
 
 }

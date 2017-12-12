@@ -45,6 +45,12 @@
                 this.editedtrack.start = (this.tracks.length) ? this.tracks[this.tracks.length -1].start : '';
                 this.editedtrack.date = dateformat(new Date(), this.$yearFormat);
                 this.editedStartDefault();
+
+                // Refresh the date start input
+                let self = this;
+                setInterval(function () {
+                    self.editedStartDefault();
+                }, 1000 * 60);
             })
         },
         updated: function () {
@@ -178,9 +184,6 @@
                 }
                 return 0;
             },
-            getSourceCategories: function () {
-                return 'test';
-            }
         },
         watch : {
             editedStart: function (val) {

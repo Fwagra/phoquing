@@ -29,7 +29,7 @@ class TrackController extends Controller
      */
     public function index()
     {
-        $tracks = Track::where('user_id', Auth::user()->id)->whereDate('start', Carbon::today())->get();
+        $tracks = Track::where('user_id', Auth::user()->id)->whereDate('start', Carbon::today())->orderBy('start')->get();
         return $tracks;
     }
 
@@ -46,12 +46,17 @@ class TrackController extends Controller
         if (!$request->total) {
             $request->merge(['total' => 1]);
         }
+
         $inputs = array_filter($request->except(['date', 'activated', 'tempTotal']));
 
         /** @var Track $track */
         if ($track = Track::find($request->id)) {
-
             $track->update($inputs);
+
+            if (!isset($inputs['end'])){
+                $track->end = null;
+            }
+
             $track->save();
         }else{
             $track = Track::create($inputs);

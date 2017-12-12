@@ -207,6 +207,7 @@ input:focus:required:invalid
     background-size: contain;
     height: 1rem;
     width: 1rem;
+    min-width: 1rem;
     cursor: pointer;
   }
   .delete-confirm{
@@ -242,6 +243,7 @@ input:focus:required:invalid
     flex:2;
     display: flex;
     align-items: center;
+    overflow: hidden;
     .delete-actions{
       display: flex;
       align-items: center;
@@ -283,10 +285,9 @@ input:focus:required:invalid
   .time,
   .name {
     z-index: 1;
-  }
-  .time{
     color: lighten($secondary, 20%);
   }
+
   .bottom{
     text-align: right;
     padding: 1rem 0;
@@ -297,4 +298,19 @@ input:focus:required:invalid
     border-radius: 4px;
     display: inline-block;
   }
+
+}
+
+
+.rollinleft-enter-active{
+  animation: rollinleft .3s;
+}
+.rollinright-enter-active{
+  animation: rollinright .3s;
+}
+.rollinleft-leave-active{
+  animation: rollinleft .2s reverse;
+}
+.rollinright-leave-active{
+  animation: rollinright .2s reverse;
 }

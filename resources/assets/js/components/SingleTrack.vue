@@ -15,7 +15,7 @@
             <div class="category" @click="activated = !activated">
                 {{ track.category }}
             </div>
-            <div class="total" :class="{real: track.total}">
+            <div class="total" :class="{real: track.total && track.end}">
                 <span v-if="track.total">
                     {{ track.total }} h
                 </span>
@@ -26,13 +26,17 @@
             <div class="actions" v-show="!this.status">
                 <div class="stop" @click="stop" v-show="!track.end">stop</div>
                 <div class="edit" @click="edit">edit</div>
-                <div class="delete" v-show="!deleteConfirm"  @click="deleteConfirm = !deleteConfirm">delete</div>
-                <transition name="rollin">
-                    <div class="delete-actions" v-show="deleteConfirm">
-                        <div class="delete-confirm"   @click="deleteTrack">delete confirm</div>
-                        <div class="delete-cancel"  @click="deleteConfirm = !deleteConfirm">delete cancel</div>
-                    </div>
+                <transition name="rollinleft">
+                    <div class="delete" v-show="!deleteConfirm"  @click="deleteConfirm = !deleteConfirm">delete</div>
                 </transition>
+                    <div class="delete-actions">
+                        <transition name="rollinleft">
+                            <div class="delete-confirm"  v-show="deleteConfirm"  @click="deleteTrack">delete confirm</div>
+                        </transition>
+                        <transition name="rollinright">
+                            <div class="delete-cancel"  v-show="deleteConfirm"  @click="deleteConfirm = !deleteConfirm">delete cancel</div>
+                        </transition>
+                    </div>
             </div>
         </div>
         <div class="lower" >
