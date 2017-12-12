@@ -54,6 +54,14 @@ a:active{
   color: $t-base;
   display: inline-block;
   font-size: 1.5rem;
+
+}
+.navbar .logo{
+  display: inline-block;
+  width: 4rem;
+  vertical-align: middle;
+  margin-right: 1rem;
+  float: left;
 }
 .navbar .navbar-brand:hover {
   color: $t-base;

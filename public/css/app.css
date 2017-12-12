@@ -162,6 +162,14 @@ a:active {
   font-size: 1.5rem;
 }
 
+.navbar .logo {
+  display: inline-block;
+  width: 4rem;
+  vertical-align: middle;
+  margin-right: 1rem;
+  float: left;
+}
+
 .navbar .navbar-brand:hover {
   color: #FDFDFD;
 }
@@ -495,6 +503,7 @@ input:focus:required:invalid {
 
   .navbar-default {
     padding-bottom: 2rem;
+    padding-top: 1rem;
   }
 
   nav .container {
@@ -507,6 +516,10 @@ input:focus:required:invalid {
     -webkit-box-pack: justify;
         -ms-flex-pack: justify;
             justify-content: space-between;
+  }
+
+  .navbar .logo {
+    float: none;
   }
 
   .navbar-nav {

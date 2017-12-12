@@ -6,11 +6,15 @@
 }
 .navbar-default{
   padding-bottom: 2rem;
+  padding-top: 1rem;
 }
 nav .container {
   display: flex;
   align-items:center;
   justify-content:space-between;
+}
+.navbar .logo{
+  float: none;
 }
 
 .navbar-nav {

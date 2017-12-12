@@ -20,6 +20,7 @@
                 <div class="navbar-header">
                     <!-- Branding Image -->
                     <a class="navbar-brand" href="{{ url('/') }}">
+                        <img class="logo" src="fonts/logo.svg" alt="Phoquing">
                         A <span class="high">Phoquing</span> time-tracker
                     </a>
                 </div>
