@@ -11,8 +11,10 @@
                 </div>
             </li>
         </ul>
-        <div class="total">
-            {{ totalTime }} h
+        <div class="bottom">
+            <div class="total">
+                {{ totalTime }} h
+            </div>
         </div>
     </div>
 </template>

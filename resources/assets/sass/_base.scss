@@ -260,3 +260,41 @@ input:focus:required:invalid
 .track .hour .end:not(.real){
   color: rgba($t-panel, 0.7);
 }
+
+.stats-container .stats{
+  li{
+    position: relative;
+    margin-bottom: .5rem;
+    padding: .5rem;
+    display: flex;
+    align-items: center;
+    justify-content:space-between;
+    color: $secondary;
+  }
+  .bar{
+    border-radius: 4px;
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    background: $t-base;
+    transition: all 0.3s ease;
+  }
+  .time,
+  .name {
+    z-index: 1;
+  }
+  .time{
+    color: lighten($secondary, 20%);
+  }
+  .bottom{
+    text-align: right;
+    padding: 1rem 0;
+  }
+  .total{
+    padding: .5rem;
+    background: lighten($secondary, 10%);
+    border-radius: 4px;
+    display: inline-block;
+  }
+}

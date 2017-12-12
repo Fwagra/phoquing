@@ -83,13 +83,11 @@
                 </div>
             </div>
             <div class="panel stats-container">
-                <div class="content" v-if="countTracks > 0">
-                    <div class="panel-heading">
-                        {{ trans('tracks.stats_title') }}
-                    </div>
-                    <div class="panel-body">
-                        <stats :tracks="tracks"></stats>
-                    </div>
+                <div class="panel-heading">
+                    {{ trans('tracks.stats_title') }}
+                </div>
+                <div class="panel-body">
+                    <stats :tracks="tracks"></stats>
                 </div>
             </div>
         </div>
