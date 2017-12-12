@@ -472,6 +472,10 @@ input:focus:required:invalid {
   display: inline-block;
 }
 
+.errors {
+  color: #ffb1c4;
+}
+
 .rollinleft-enter-active {
   -webkit-animation: rollinleft .3s;
           animation: rollinleft .3s;

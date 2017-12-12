@@ -309,6 +309,9 @@ input:focus:required:invalid
 
 }
 
+.errors{
+  color: lighten($error, 20%);
+}
 
 .rollinleft-enter-active{
   animation: rollinleft .3s;

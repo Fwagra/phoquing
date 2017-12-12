@@ -31,4 +31,16 @@ class StoreTrack extends FormRequest
             'category' => 'required|max:100',
         ];
     }
+
+    /**
+     * Get the error messages for the defined validation rules.
+     *
+     * @return array
+     */
+    public function messages()
+    {
+        return [
+//            'end.after' => trans('validation.end_after')
+        ];
+    }
 }
