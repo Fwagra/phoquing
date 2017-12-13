@@ -10,7 +10,8 @@ return [
     |
     */
 
-    'no_tracks_found' => 'No tracks found yet',
+    'no_tracks_found' => 'No tracks found today',
+    'no_tracks_found_yet' => 'No tracks found yet',
     'loading_tracks' => 'Loading your tracks',
     'tracks_title' => 'My tracks',
     'stats_title' => 'Stats',
