@@ -422,6 +422,15 @@ input:focus:required:invalid {
   padding: 1rem;
 }
 
+.reset-filters {
+  background: url(/fonts/reset.svg?e09d2100986e9f5b2d0a13a237a290b3) no-repeat;
+  display: inline-block;
+  width: 1.5rem;
+  height: 1.5rem;
+  vertical-align: middle;
+  cursor: pointer;
+}
+
 .track .total:not(.real),
 .track .hour .end:not(.real) {
   color: rgba(216, 193, 230, 0.7);
@@ -472,6 +481,15 @@ input:focus:required:invalid {
   display: inline-block;
 }
 
+.time-container .day {
+  padding: 1rem 0;
+}
+
+.time-container .day span {
+  background: #ab78c9;
+  border-radius: 4px;
+}
+
 .errors {
   color: #ffb1c4;
 }
@@ -494,6 +512,19 @@ input:focus:required:invalid {
 .rollinright-leave-active {
   -webkit-animation: rollinright .2s reverse;
           animation: rollinright .2s reverse;
+}
+
+.filters {
+  float: right;
+  position: relative;
+  top: -.25rem;
+}
+
+.filters .date {
+  vertical-align: middle;
+  font-size: .9rem;
+  padding: .5rem;
+  display: inline-block;
 }
 
 @media screen and (min-width: 768px) {

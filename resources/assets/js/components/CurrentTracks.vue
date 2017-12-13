@@ -12,6 +12,9 @@
                 countTracks: null,
                 status: null,
                 tracks : [],
+                date: null,
+                dateToday: null,
+                dateEnd: null,
                 currentTime : '',
                 editedStart : '',
                 editedEnd : '',
@@ -44,6 +47,7 @@
                 // Set the default values
                 this.editedtrack.start = (this.tracks.length) ? this.tracks[this.tracks.length -1].start : '';
                 this.editedtrack.date = dateformat(new Date(), this.$yearFormat);
+                this.date = this.dateToday = dateformat(new Date(), this.$yearFormat);
                 this.editedStartDefault();
 
                 // Refresh the date start input
@@ -56,6 +60,17 @@
         updated: function () {
             this.countTracks = this.tracks.length;
             this.addProperties();
+        },
+        computed: {
+            displayReset: function () {
+              return !!(this.dateEnd || this.date !== this.dateToday);
+            },
+            filtered: function () {
+                return !!(this.dateEnd && this.date !== this.dateToday);
+            },
+            grouped: function () {
+                return _.groupBy(this.tracks, 'date');
+            }
         },
         methods: {
             // Send the provided track to DB and refresh the list
@@ -184,6 +199,21 @@
                 }
                 return 0;
             },
+            filterTracks: function() {
+                let date1 = this.date;
+                let date2 = this.dateEnd;
+
+                if (date1 !== null) {
+                    let url = (date2 !== null) ? 'tracks-filtered/' + date1 + '/' + date2 : 'tracks-filtered/'+ date1 + '/';
+                    this.$resource(url).get().then((response) => {
+                        this.tracks = response.body;
+                    })
+                }
+            },
+            resetFilters: function () {
+                this.date = this.dateToday;
+                this.dateEnd = null;
+            }
         },
         watch : {
             editedStart: function (val) {
@@ -199,6 +229,12 @@
                 } else {
                     this.editedtrack.end = '';
                 }
+            },
+            date: function(){
+                this.filterTracks();
+            },
+            dateEnd: function(){
+                this.filterTracks();
             }
         }
     }

@@ -265,6 +265,15 @@ input:focus:required:invalid
   .lower .comment{
     padding: 1rem;
   }
+
+}
+.reset-filters {
+  background: url('img/reset.svg') no-repeat;
+  display: inline-block;
+  width: 1.5rem;
+  height: 1.5rem;
+  vertical-align: middle;
+  cursor: pointer;
 }
 .track .total:not(.real),
 .track .hour .end:not(.real){
@@ -308,6 +317,13 @@ input:focus:required:invalid
   }
 
 }
+.time-container  .day{
+  padding: 1rem 0;
+  span {
+    background: lighten($secondary, 10%);
+    border-radius: 4px;
+  }
+}
 
 .errors{
   color: lighten($error, 20%);
@@ -324,4 +340,16 @@ input:focus:required:invalid
 }
 .rollinright-leave-active{
   animation: rollinright .2s reverse;
+}
+
+.filters {
+  float: right;
+  position: relative;
+  top: -.25rem;
+}
+.filters .date{
+  vertical-align: middle;
+  font-size: .9rem;
+  padding: .5rem;
+  display: inline-block;
 }

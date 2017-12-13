@@ -59,9 +59,37 @@
             <div class="panel time-container">
                 <div class="panel-heading">
                     {{ trans('tracks.tracks_title') }}
+                    <span class="filters">
+                        <transition name="rollinright">
+                            <span class="reset-filters"  @click="this.resetFilters" v-show="this.displayReset"></span>
+                        </transition>
+                        <input type="date" name="date" class="date" v-model="date">
+                        <input type="date" name="dateEnd" class="date date-end" v-model="dateEnd">
+                    </span>
                 </div>
                 <div class="panel-body content" v-if="countTracks > 0">
-                    <ul>
+                    <ul v-if="this.filtered">
+                        <div v-for="(groupTracks, key) in this.grouped">
+                            <div class="day">
+                               <span>
+                                   @{{ key }}
+                               </span>
+                            </div>
+                            <li
+                                    is="single-track"
+                                    v-for="(track, key) in groupTracks"
+                                    :key="track.id"
+                                    :track="track"
+                                    :status="status"
+                                    @@stop="stopTrack"
+                                    @edit="editTrack"
+                                    @deletetrack="deleteTrack"
+                            >
+                            </li>
+                        </div>
+
+                    </ul>
+                    <ul v-else>
                         <li
                             is="single-track"
                             v-for="(track, key) in tracks"

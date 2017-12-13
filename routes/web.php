@@ -19,3 +19,4 @@ Auth::routes();
 Route::get('/', 'HomeController@index')->name('home');
 Route::resource('tracks', 'TrackController', ['except' => ['create', 'update', 'show', 'edit']]);
 Route::get('track-categories/{q}', 'TrackController@getCategories')->name('tracks.categories');
+Route::get('tracks-filtered/{date1}/{date2?}', 'TrackController@getTracksByDate')->name('tracks.filtered');

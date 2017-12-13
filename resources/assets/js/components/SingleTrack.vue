@@ -1,5 +1,5 @@
 <template>
-    <div class="track"
+    <li class="track"
          :class="{clickable:track.comment}">
         <div class="upper">
             <div class="hour">
@@ -44,7 +44,7 @@
                 {{ track.comment }}
             </div>
         </div>
-    </div>
+    </li>
 </template>
 <script>
     export default {

@@ -33,6 +33,26 @@ class TrackController extends Controller
         return $tracks;
     }
 
+    public function getTracksByDate($date1, $date2 = null)
+    {
+        if (!isset($date1))
+            return $this->index();
+
+        if (!is_null($date2)) {
+            $date2 = Carbon::parse($date2)->addDay();
+            $tracks = Track::where('user_id', Auth::user()->id)
+                        ->whereBetween('start', [$date1, $date2])
+                        ->orderBy('start')
+                        ->get();
+        } else{
+            $tracks = Track::where('user_id', Auth::user()->id)
+                        ->whereDate('start', $date1)
+                        ->orderBy('start')
+                        ->get();
+        }
+
+        return $tracks;
+    }
 
 
     /**
@@ -79,19 +99,19 @@ class TrackController extends Controller
     }
 
     /**
-     * Return a list of categories available for the current user
-     * @param $q
-     * @return \Illuminate\Http\JsonResponse
-     */
+ * Return a list of categories available for the current user
+ * @param $q
+ * @return \Illuminate\Http\JsonResponse
+ */
     public function getCategories($q)
     {
         $user = Auth::id();
         $categories = DB::table('tracks')
-                        ->where('user_id',$user)
-                        ->where('category', 'LIKE', '%'.$q.'%')
-                        ->groupBy('category')
-                        ->limit(5)
-                        ->pluck('category');
+            ->where('user_id',$user)
+            ->where('category', 'LIKE', '%'.$q.'%')
+            ->groupBy('category')
+            ->limit(5)
+            ->pluck('category');
 
         return response()->json($categories);
     }
