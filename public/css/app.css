@@ -562,6 +562,10 @@ input:focus:required:invalid {
             justify-content: space-between;
   }
 
+  .actions-panel .btn-link {
+    padding-right: 1rem;
+  }
+
   .actions-panel.reverse {
     -webkit-box-orient: horizontal;
     -webkit-box-direction: reverse;
@@ -571,6 +575,7 @@ input:focus:required:invalid {
 
   .centered-panel {
     padding-top: 3rem;
+    margin: 0 auto;
   }
 
   .track-form .actions-panel,

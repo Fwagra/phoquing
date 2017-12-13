@@ -42,6 +42,9 @@ div[class^="panel-"] {
   display: flex;
   align-items:center;
   justify-content:space-between;
+  .btn-link{
+    padding-right: 1rem;
+  }
 }
 
 .actions-panel.reverse{
@@ -50,6 +53,7 @@ div[class^="panel-"] {
 
 .centered-panel {
   padding-top: 3rem;
+  margin: 0 auto;
 }
 
 .track-form {

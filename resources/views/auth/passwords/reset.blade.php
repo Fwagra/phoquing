@@ -3,7 +3,7 @@
 @section('content')
 <div class="container">
     <div class="row">
-        <div class="col-md-8 col-md-offset-2">
+        <div class="centered-panel">
             <div class="panel panel-default">
                 <div class="panel-heading">{{ trans('auth.reset_password') }}</div>
 
@@ -17,7 +17,9 @@
                             <label for="email" class="col-md-4 control-label">{{ trans('auth.email') }}</label>
 
                             <div class="col-md-6">
-                                <input id="email" type="email" class="form-control" name="email" value="{{ $email or old('email') }}" required autofocus>
+                                <div class="input-wrapper">
+                                    <input id="email" type="email" class="form-control" name="email" value="{{ $email or old('email') }}" required autofocus>
+                                </div>
 
                                 @if ($errors->has('email'))
                                     <span class="help-block">
@@ -31,7 +33,9 @@
                             <label for="password" class="col-md-4 control-label">{{ trans('auth.password') }}</label>
 
                             <div class="col-md-6">
-                                <input id="password" type="password" class="form-control" name="password" required>
+                                <div class="input-wrapper">
+                                    <input id="password" type="password" class="form-control" name="password" required>
+                                </div>
 
                                 @if ($errors->has('password'))
                                     <span class="help-block">
