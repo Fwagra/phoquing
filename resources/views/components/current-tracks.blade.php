@@ -103,6 +103,9 @@
                         </li>
                     </ul>
                 </div>
+                <div class="panel-body content" v-else-if="countTracks == 0 && this.displayReset">
+                    {{ trans('tracks.no_tracks_found_yet') }}
+                </div>
                 <div class="panel-body content" v-else-if="countTracks == 0">
                     {{ trans('tracks.no_tracks_found') }}
                 </div>

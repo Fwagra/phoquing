@@ -11,6 +11,7 @@ return [
     */
 
     'no_tracks_found' => 'Aucune heure entrée pour aujourd\'hui',
+    'no_tracks_found_yet' => 'Aucune heure trouvée',
     'loading_tracks' => 'Chargement des heures',
     'tracks_title' => 'Mes tâches',
     'stats_title' => 'Statistiques',
