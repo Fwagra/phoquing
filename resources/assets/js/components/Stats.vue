@@ -1,7 +1,7 @@
 <template>
     <div class="stats">
         <ul v-if="tracks">
-            <li v-for="stat in orderedStats">
+            <li v-for="stat in orderedStats" @click="openModal(stat)">
                 <div class="bar" :style="{width: stat.percentage}"></div>
                 <div class="name">
                     {{ stat.category }}
@@ -86,6 +86,9 @@
                 this.stats.forEach(function (stat) {
                     stat.percentage = mathPhp.round((stat.total * 100 ) /  this.totalTime,1) + "%";
                 }, this)
+            },
+            openModal: function (stat) {
+                this.$emit('openmodal', stat.category);
             }
         }
     }

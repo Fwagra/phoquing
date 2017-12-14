@@ -4,6 +4,7 @@
     import SingleTrack from './SingleTrack.vue'
     import Stats from './Stats.vue'
     import Autocomplete from './Autocomplete.vue'
+    import Modal from './Modal.vue'
     export default {
         resource: null,
         data () {
@@ -15,6 +16,8 @@
                 date: null,
                 dateToday: null,
                 dateEnd: null,
+                showModal: false,
+                modalText: '',
                 currentTime : '',
                 editedStart : '',
                 editedEnd : '',
@@ -32,7 +35,8 @@
         components: {
            'single-track': SingleTrack,
            'stats': Stats,
-           'autocomplete': Autocomplete
+           'autocomplete': Autocomplete,
+           'modal': Modal
         },
         mounted() {
 
@@ -213,6 +217,16 @@
             resetFilters: function () {
                 this.date = this.dateToday;
                 this.dateEnd = null;
+            },
+            populateModal: function(category) {
+                this.modalText = '';
+                this.tracks.forEach(function (el) {
+                    if (el.category == category) {
+                    console.log(el.category);
+                        this.modalText += el.comment + "<br/>"
+                    }
+                }, this);
+                this.showModal = true;
             }
         },
         watch : {

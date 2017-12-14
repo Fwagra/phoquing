@@ -118,11 +118,14 @@
                     {{ trans('tracks.stats_title') }}
                 </div>
                 <div class="panel-body">
-                    <stats :tracks="tracks"></stats>
+                    <stats :tracks="tracks" v-on:openmodal="populateModal"></stats>
                 </div>
             </div>
         </div>
-
+        <modal v-if="showModal" @close="showModal = false">
+            <p slot="body" v-html="modalText">
+            </p>
+        </modal>
 
     </div>
 </current-tracks>
