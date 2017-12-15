@@ -59,6 +59,9 @@
                 setInterval(function () {
                     self.editedStartDefault();
                 }, 1000 * 60);
+                setInterval(function () {
+                    self.checkSession();
+                }, 1000 * 60 *10);
             })
         },
         updated: function () {
@@ -222,12 +225,18 @@
                 this.modalText = '';
                 this.tracks.forEach(function (el) {
                     if (el.category == category) {
-                    console.log(el.category);
                         this.modalText += el.comment + "<br/>"
                     }
                 }, this);
                 this.showModal = true;
-            }
+            },
+            checkSession: function () {
+                this.$resource('/').get().then((response) => {
+                    if (response.status !== 200) {
+                        location.reload();
+                    }
+                });
+            },
         },
         watch : {
             editedStart: function (val) {
