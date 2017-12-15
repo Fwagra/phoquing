@@ -1,4 +1,4 @@
-#A phoquing time-tracker
+# A phoquing time-tracker
 
 Phoquing is a simple time-tracker made with Laravel 5.5 and VueJs
 
