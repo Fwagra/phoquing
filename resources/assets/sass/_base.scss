@@ -180,6 +180,7 @@ input:focus:required:invalid
   position: absolute;
   background: lighten($secondary,80%);
   font-size: .9rem;
+  z-index: 1;
   li{
     padding: .5rem;
   }
@@ -194,10 +195,12 @@ input:focus:required:invalid
   color: $t-base;
 
   .actions .delete,
+  .actions .duplicate,
   .actions .edit{
     display: none;
   }
   &:hover .delete,
+  &:hover .duplicate,
   &:hover .edit{
     display: inline-block;
   }
@@ -206,6 +209,7 @@ input:focus:required:invalid
 .track{
   padding: .3rem 0;
   .delete,
+  .duplicate,
   .delete-confirm,
   .delete-cancel,
   .edit,
@@ -226,6 +230,9 @@ input:focus:required:invalid
   }
   .edit{
     background: url('img/edit.svg') no-repeat;
+  }
+  .duplicate{
+    background: url('img/play.svg') no-repeat;
   }
   .delete{
     background: url('img/delete.svg') no-repeat;

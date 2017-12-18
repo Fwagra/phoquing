@@ -152,6 +152,22 @@
                     this.errors = response.body.errors;
                 });
             },
+            duplicateTrack: function (val) {
+                // Check if the last track is still running
+                if (this.tracks.length) {
+                    let lastTrack = this.tracks[this.tracks.length -1];
+                    if (!lastTrack.end){
+                        this.stopTrack(lastTrack);
+                    }
+                }
+
+                this.editedtrack.start = dateformat(Date.now(), this.$hourFormat);
+                this.editedtrack.comment = val.comment;
+                this.editedtrack.category = val.category;
+
+                this.sendTrack(this.editedtrack);
+
+            },
             cancelEditTrack: function () {
                 this.status = '';
                 this.emptyEditedTrack();

@@ -25,6 +25,7 @@
             </div>
             <div class="actions" v-show="!this.status">
                 <div class="stop" @click="stop" v-show="!track.end">stop</div>
+                <div class="duplicate" @click="duplicate" v-show="track.end">duplicate</div>
                 <div class="edit" @click="edit">edit</div>
                 <transition name="rollinleft">
                     <div class="delete" v-show="!deleteConfirm"  @click="deleteConfirm = !deleteConfirm">delete</div>
@@ -79,7 +80,7 @@
             },
             endTime: {
                 get: function() {
-                    return (this.track.end )? dateformat(this.track.end, 'HH:MM') : '';
+                    return (this.track.end )? dateformat(this.track.end, this.$hourFormat) : '';
                 },
                 set: function(value) {
                     this.track.end = dateformat(this.track.date + value);
@@ -92,6 +93,9 @@
             },
             edit : function () {
                 this.$emit('edit', this.track);
+            },
+            duplicate: function () {
+              this.$emit('duplicate', this.track);
             },
             deleteTrack: function () {
                 this.$emit('deletetrack', this.track);

@@ -83,6 +83,7 @@
                                     :status="status"
                                     @@stop="stopTrack"
                                     @edit="editTrack"
+                                    @duplicate="duplicateTrack"
                                     @deletetrack="deleteTrack"
                             >
                             </li>
@@ -97,6 +98,7 @@
                             :track="track"
                             :status="status"
                             @@stop="stopTrack"
+                            @duplicate="duplicateTrack"
                             @edit="editTrack"
                             @deletetrack="deleteTrack"
                         >
