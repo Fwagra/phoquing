@@ -12,7 +12,7 @@
                     </span>
                 </span>
             </div>
-            <div class="category" @click="activated = !activated">
+            <div class="category" @click="activated = !activated" v-tooltip.left="trans('tracks.click_comment')">
                 {{ track.category }}
             </div>
             <div class="total" :class="{real: track.total && track.end}">
@@ -24,18 +24,18 @@
                 </span>
             </div>
             <div class="actions" v-show="!this.status">
-                <div class="stop" @click="stop" v-show="!track.end">stop</div>
-                <div class="duplicate" @click="duplicate" v-show="track.end">duplicate</div>
-                <div class="edit" @click="edit">edit</div>
+                <div class="stop" v-tooltip=" trans('tracks.stop') " @click="stop" v-show="!track.end">{{ trans('tracks.stop') }}</div>
+                <div class="duplicate" v-tooltip="trans('tracks.continue')" @click="duplicate" v-show="track.end">{{ trans('tracks.continue') }}</div>
+                <div class="edit" v-tooltip="trans('tracks.edit')" @click="edit">{{ trans('tracks.edit') }}</div>
                 <transition name="rollinleft">
-                    <div class="delete" v-show="!deleteConfirm"  @click="deleteConfirm = !deleteConfirm">delete</div>
+                    <div class="delete" v-tooltip="trans('tracks.delete')" v-show="!deleteConfirm"  @click="deleteConfirm = !deleteConfirm">{{ trans('tracks.delete') }}</div>
                 </transition>
                     <div class="delete-actions">
                         <transition name="rollinleft">
-                            <div class="delete-confirm"  v-show="deleteConfirm"  @click="deleteTrack">delete confirm</div>
+                            <div class="delete-confirm" v-tooltip="trans('tracks.delete_confirm')"  v-show="deleteConfirm"  @click="deleteTrack">{{ trans('tracks.delete_confirm') }}</div>
                         </transition>
                         <transition name="rollinright">
-                            <div class="delete-cancel"  v-show="deleteConfirm"  @click="deleteConfirm = !deleteConfirm">delete cancel</div>
+                            <div class="delete-cancel" v-tooltip="trans('tracks.delete_cancel')"   v-show="deleteConfirm"  @click="deleteConfirm = !deleteConfirm">{{ trans('tracks.delete_cancel') }}</div>
                         </transition>
                     </div>
             </div>

@@ -1,7 +1,7 @@
 <template>
     <div class="stats">
         <ul v-if="tracks">
-            <li v-for="stat in orderedStats" @click="openModal(stat)">
+            <li v-for="stat in orderedStats" @click="openModal(stat)" v-tooltip.left="trans('tracks.click_resume')">
                 <div class="bar" :style="{width: stat.percentage}"></div>
                 <div class="name">
                     {{ stat.category }}

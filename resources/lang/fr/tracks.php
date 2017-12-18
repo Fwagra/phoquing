@@ -23,5 +23,13 @@ return [
     'comment' => "Commentaire",
     'category' => "Catégorie",
     'cancel_edit_button' => 'Annuler',
-    'edit_task' => 'Editer une tâche'
+    'edit_task' => 'Editer une tâche',
+    'stop' => "Arrêter",
+    'edit' => "Modifier",
+    'continue' => "Reprendre",
+    'delete' => "Supprimer ?",
+    'delete_confirm' => "Supprimer",
+    'delete_cancel' => "Annuler",
+    'click_comment' => "Voir le commentaire",
+    'click_resume' => "Tous les commentaires de cette catégorie",
 ];
