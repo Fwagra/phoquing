@@ -43,7 +43,7 @@
                             </div>
                         </div>
                         <div class="actions-panel">
-                            <input type="button" class="btn" @click="sendInputTrack" value="{{ trans('tracks.add_button') }}">
+                            <input type="button" class="btn" @click="sendInputTrack" :value="formButton">
                             <input class="btn btn-error"  v-show="status == 'edition'" type="button" @click="cancelEditTrack" value="{{ trans('tracks.cancel_edit_button') }}">
                         </div>
                     </div>

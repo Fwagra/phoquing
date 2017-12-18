@@ -77,6 +77,9 @@
             },
             grouped: function () {
                 return _.groupBy(this.tracks, 'date');
+            },
+            formButton: function () {
+                return (this.status === 'edition') ? window.i18n.tracks.edit :  window.i18n.tracks.add_button;
             }
         },
         methods: {
