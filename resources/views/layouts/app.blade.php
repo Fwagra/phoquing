@@ -60,6 +60,7 @@
     </div>
 
     <!-- Scripts -->
+    <script src="/js/lang.js"></script>
     <script src="{{ asset('js/app.js') }}"></script>
 </body>
 </html>

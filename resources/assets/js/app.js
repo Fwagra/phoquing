@@ -18,6 +18,7 @@ window.Vue = require('vue');
 Vue.use(require('vue-resource'));
 Vue.component('current-tracks', require('./components/CurrentTracks.vue'));
 Vue.http.headers.common['X-CSRF-TOKEN'] = document.head.querySelector('meta[name="csrf-token"]').content;
+Vue.prototype.trans = string => _.get(window.i18n, string);
 Vue.prototype.$hourFormat = "HH:MM";
 Vue.prototype.$yearFormat = "yyyy-mm-dd";
 const app = new Vue({
