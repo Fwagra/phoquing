@@ -239,10 +239,14 @@
             },
             populateModal: function(category) {
                 this.modalText = '';
+                let tmpValues = [];
                 this.tracks.forEach(function (el) {
-                    if (el.category == category) {
-                        this.modalText += el.comment + "<br/>"
+                    if (el.category === category && tmpValues.indexOf(el.comment) === -1) {
+                        tmpValues.push(el.comment);
                     }
+                }, this);
+                tmpValues.forEach(function (el) {
+                    this.modalText += el + "<br/>"
                 }, this);
                 this.showModal = true;
             },
