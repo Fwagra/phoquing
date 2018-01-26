@@ -17,7 +17,7 @@ return [
     'throttle' => 'Too many login attempts. Please try again in :seconds seconds.',
     'login' => 'Login',
     'logout' => 'Logout',
-    'hello' => 'Hello :name',
+    'hello' => 'Hello',
     'email' => 'E-Mail Address',
     'password' => 'Password',
     'remember' => 'Remember Me',
@@ -27,4 +27,9 @@ return [
     'confirm_password' => 'Confirm Password',
     'reset_password' => 'Reset Password',
     'send_password' => 'Send Password Reset Link',
+    'new_password' => 'New password',
+    'old_password' => 'Old password',
+    'edit_user' => 'Edit my infos',
+    'save' => 'Save',
+    'infos_edited' => 'Your informations have been saved',
 ];

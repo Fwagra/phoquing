@@ -113,12 +113,12 @@ div[class^="panel-"] {
   .panel-heading{
     background: $edit-head;
   }
-  input:not([type="button"]){
+  input:not([type="button"]):not([type="submit"]){
     background: darken($edit-head, 20%);
   }
 }
 
-input:not([type="button"])
+input:not([type="button"]):not([type="submit"])
 {
   border-radius: 3px;
   border: none;
@@ -140,12 +140,14 @@ input:not([type="button"])
 .input-wrapper {
   margin: 1rem 0;
 }
-
+.has-error input:not([type="button"]):not([type="submit"]),
 input:focus:required:invalid
 {
   box-shadow: inset $error 0 0 0px 2px;
 }
-
+.has-error .help-block {
+  color: lighten($error, 10%);
+}
 .remember-me{
   font-weight: normal;
 }
@@ -363,6 +365,21 @@ input:focus:required:invalid
   display: inline-block;
 }
 
+.alert-container {
+  text-align: center;
+}
+
+.alert {
+  padding: 15px;
+  display: inline;
+  border-radius: 4px;
+}
+.alert-success{
+  background: $edit-body;
+}
+.alert-error {
+  background: $error;
+}
 
 .modal-mask {
   position: fixed;

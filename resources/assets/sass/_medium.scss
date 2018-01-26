@@ -52,8 +52,11 @@ div[class^="panel-"] {
 }
 
 .centered-panel {
-  padding-top: 3rem;
   margin: 0 auto;
+}
+
+.login .centered-panel {
+  padding-top: 3rem;
 }
 
 .track-form {
@@ -76,4 +79,7 @@ div[class^="panel-"] {
   &>div:nth-child(2){
     flex:1
   }
+}
+.edit-user .panel {
+  min-width: 500px;
 }

@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="container">
+<div class="container login">
     <div class="row">
         <div class="centered-panel">
             <div class="panel panel-default">

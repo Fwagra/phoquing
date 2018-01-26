@@ -38,7 +38,7 @@
                         <li><a href="{{ route('register') }}">{{ trans('auth.register') }}</a></li>
                     @else
                         <li>
-                                {{ trans('auth.hello' ,['name' => Auth::user()->name]) }}
+                                {{ trans('auth.hello') }} <a href="{{ route('user.edit') }}">{{ Auth::user()->name }}</a>
                         </li>
                         <li>
                             <a href="{{ route('logout') }}"
@@ -55,7 +55,24 @@
                 </ul>
             </div>
         </nav>
-
+        <div class="container alert-container">
+            @if(Session::has('success'))
+                <div class="alert alert-success">
+                    {{ Session::get('success') }}
+                    @php
+                        Session::forget('success');
+                    @endphp
+                </div>
+            @endif
+            @if(Session::has('error'))
+                <div class="alert alert-error">
+                    {{ Session::get('error') }}
+                    @php
+                        Session::forget('error');
+                    @endphp
+                </div>
+            @endif
+        </div>
         @yield('content')
     </div>
 

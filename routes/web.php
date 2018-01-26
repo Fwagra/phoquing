@@ -12,6 +12,7 @@
 */
 
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Route;
 
 
 Auth::routes();
@@ -20,6 +21,8 @@ Route::get('/', 'HomeController@index')->name('home');
 Route::resource('tracks', 'TrackController', ['except' => ['create', 'update', 'show', 'edit']]);
 Route::get('track-categories/{q}', 'TrackController@getCategories')->name('tracks.categories');
 Route::get('tracks-filtered/{date1}/{date2?}', 'TrackController@getTracksByDate')->name('tracks.filtered');
+Route::get('user', 'UserController@edit')->name('user.edit')->middleware('auth');
+Route::put('user/{user}', 'UserController@update')->name('user.update')->middleware('auth');
 
 // Localization
 Route::get('/js/lang.js', function () {

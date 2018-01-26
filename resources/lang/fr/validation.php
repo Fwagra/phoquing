@@ -64,6 +64,7 @@ return [
     ),
     "unique"           => "La valeur du champ :attribute est déjà utilisée.",
     "url"              => "Le format de l'URL de :attribute n'est pas valide.",
+    'old_password'     => "Votre ancien mot de passe ne correspond pas à celui entré.",
     /*
     |--------------------------------------------------------------------------
     | Custom Validation Language Lines
@@ -93,5 +94,7 @@ return [
         'start' => 'Début',
         'comment' => 'Commentaire',
         'category' => 'Catégorie',
+        'old_password' => "Ancien mot de passe",
+        'password' => 'mot de passe'
     ),
 ];
